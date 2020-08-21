@@ -4,7 +4,14 @@
   "description": "This is a platform that acts as an intermediate between the farmer and consumer (Farmer - Consumer platform).",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pm2-runtime start ./server/bin/prod",
+    "dev": "node ./server/bin/dev --watch",
+    "test": "mocha --require babel-register ./server/test/*.js --exit",
+    "build": "npm run clean && mkdir dist && babel server -s -d dist",
+    "production": "npm run build && pm2-runtime start ./server/bin/prod",
+    "clean": "rm -rf dist",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+
   },
   "repository": {
     "type": "git",
